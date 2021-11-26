@@ -5,3 +5,5 @@
   + Apache server
   + SSH server
   + No desktop
+  + cvlc
+  + video codecs
