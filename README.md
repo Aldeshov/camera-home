@@ -1,5 +1,4 @@
 # Home camera server setup
---------------------------
 
 * Debian server
   + Apache server
