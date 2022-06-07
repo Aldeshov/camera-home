@@ -8,7 +8,6 @@ do
   date=$(date +"%F")
   hour=$(date +"%H-00")
   file=$(date +"%H-%M-%S.mp4")
-  cvlc -vvv "$url" --rtsp-tcp --rtsp-frame-buffer-size=10000000 --rtsp-timeout=10 --sout-transcode-fps=25 --sout=file/mp4:record.mp4 -I dummy --stop-time=16 vlc://quit
 
   # Path to Camera Records (Apache Server)
   root='/var/www/camera'
@@ -28,15 +27,7 @@ do
   then
     mkdir "$root/$date/$hour"
   fi
-
-  # Move written video file to Camera Path
-  if [ -e "record.mp4" ]
-  then
-    if [ $(stat --format=%s "record.mp4") -gt 256 ]
-    then
-      mv "record.mp4" "$root/$date/$hour/$file"
-    else
-      rm "record.mp4"
-    fi
-  fi
+  
+  cd "$root/$date/$hour"
+  openRTSP -D 1 -b 10000000 -4 -d 120 -P 121 -F "$file" -t "$url"
 done
